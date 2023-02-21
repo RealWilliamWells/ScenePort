@@ -1,33 +1,37 @@
 #pragma once
 
-#include "Core/Base.h"
-#include <glm/glm.hpp>
+#include "Base.h"
+
+namespace tbd {
 
 struct Transform {
-  glm::vec3 position;
-  glm::vec3 rotation;
-  glm::vec3 scale;
+  Vector3<float> position;
+  Vector3<float> rotation;
+  Vector3<float> scale;
 };
 
 struct Model {
   // USED TO CHECK IF THE ASSET IS ALREADY LOADED IN MEMORY.
-  ambr::U64 UUID;
+  U64 md5;
 
   // OpenGL ID buffer IDs
-  ambr::U32 vertexArrayObject;
-  ambr::U32 vertices;
-  ambr::U32 indices;
-  ambr::U32 textureCoords;
-  ambr::U32 normals;
+  U32 vao;
+  U32 vbo;
+  U32 ebo;
 
   // Include vertex data, with textures and normals etc...
+  std::vector<Vector3<float>> vertices;
+  std::vector<Vector3<U32>> indices;
+  std::vector<Vector3<float>> textureCoords;
+  std::vector<Vector3<float>> normals;
+
 };
 
 class Entity {
  public:
   std::string name;
   Transform transform;
-  ambr::U32 modelID;
+  std::shared_ptr<Model> model;
 };
 
 class Scene {
@@ -39,15 +43,18 @@ class Scene {
 
 class ModelManager {
  public:
-  static ModelManager& Get() {
+  static ModelManager &Get() {
     static ModelManager s_Instance;
     return s_Instance;
   }
 
-  const Model& GetModel(ambr::U32 modelID) const;
+  std::shared_ptr<Model> ImportModel(const std::string &path);
   void FreeUnusedModels(Scene scene);
-  ambr::U32 ImportModel(const std::string& path);
+
+  [[nodiscard]] std::shared_ptr<Model> GetModel(U32 modelID) const;
 
  private:
   std::vector<Model> m_Model;
+};
+
 };
