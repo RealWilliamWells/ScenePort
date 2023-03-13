@@ -24,7 +24,6 @@ struct Model {
   std::vector<Vector3<U32>> indices;
   std::vector<Vector3<float>> textureCoords;
   std::vector<Vector3<float>> normals;
-
 };
 
 class Entity {
@@ -49,6 +48,10 @@ class ModelManager {
   }
 
   std::shared_ptr<Model> ImportModel(const std::string &path);
+  std::shared_ptr<Model> ImportModel(const std::vector<Vector3<float>> &vertices,
+                                    const std::vector<Vector3<U32>> &indices,
+                                    const std::vector<Vector3<float>> &textureCoords,
+                                    const std::vector<Vector3<float>> &normals);
   void FreeUnusedModels(Scene scene);
 
   [[nodiscard]] std::shared_ptr<Model> GetModel(U32 modelID) const;
