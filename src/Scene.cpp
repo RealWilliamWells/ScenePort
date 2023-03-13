@@ -39,6 +39,10 @@ const Entity& Scene::getEntity(const U8 &index) {
   return m_Entities.at(index);
 }
 
+const std::vector<Entity>& Scene::getEntities() {
+  return m_Entities;
+}
+
 std::shared_ptr<Scene> SceneManager::importScene(std::istream &input) {
   Scene scene;
   cereal::BinaryInputArchive inputArchive(input);

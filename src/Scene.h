@@ -67,6 +67,7 @@ class Scene {
 
   void addEntity(const Entity &entity);
   const Entity& getEntity(const U8 &index);
+  const std::vector<Entity>& getEntities();
 
   template <class Archive>
   void serialize( Archive & ar )
