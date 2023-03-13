@@ -2,14 +2,25 @@ cmake_minimum_required(VERSION 3.20)
 project(scene-data)
 
 file(GLOB_RECURSE SRCS "src/*.cpp")
-include_directories(src/)
+
+# Fetch dependencies
+set(CEREAL_COMMIT ebef1e929807629befafbb2918ea1a08c7194554) # Version 1.3.2
+
+include(FetchContent)
+
+FetchContent_Declare(cereal
+        GIT_REPOSITORY https://github.com/USCiLab/cereal.git
+        GIT_TAG ${CEREAL_COMMIT})
+FetchContent_MakeAvailable(cereal)
+FetchContent_GetProperties(cereal SOURCE_DIR CEREAL_SOURCE_DIR)
+
+include_directories(src/ ${CEREAL_SOURCE_DIR}/include)
 
 add_library(scene-data ${SRCS})
 
-# Fetch dependencies
-set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
 
-include(FetchContent)
+# Testing framework
+set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
 
 FetchContent_Declare(googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -18,7 +29,7 @@ FetchContent_Declare(googletest
 set(GTEST_FORCE_SHARED_CRT ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# Testing framework
+
 include_directories(tests/)
 
 enable_testing()

@@ -8,6 +8,9 @@
 #include <memory>
 #include <vector>
 
+#include <cereal/types/memory.hpp>
+#include <cereal/archives/binary.hpp>
+
 namespace tbd {
 
 typedef uint8_t U8;
@@ -24,6 +27,12 @@ typedef int64_t I64;
 template<typename T>
 struct Vector3 {
   T x, y, z;
+
+  template <class Archive>
+  void serialize( Archive & ar )
+  {
+    ar( x, y, z );
+  }
 };
 
 };
