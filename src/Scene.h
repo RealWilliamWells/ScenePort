@@ -2,9 +2,11 @@
 
 #include "Base.h"
 
+#ifndef NO_CEREAL
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/archives/binary.hpp>
+#endif
 
 namespace tbd {
 
@@ -13,11 +15,13 @@ struct Transform {
   Vector3<float> rotation;
   Vector3<float> scale;
 
+#ifndef NO_CEREAL
   template <class Archive>
   void serialize( Archive & ar )
   {
     ar( position, rotation, scale );
   }
+#endif
 };
 
 struct Model {
@@ -38,11 +42,13 @@ struct Model {
   // Texture file
   std::vector<U8> texture;
 
+#ifndef NO_CEREAL
   template <class Archive>
   void serialize( Archive & ar )
   {
     ar( md5, vao, vbo, ebo, vertices, indices, textureCoords, normals, texture );
   }
+#endif
 };
 
 class Entity {
@@ -54,11 +60,13 @@ class Entity {
   Transform transform;
   std::shared_ptr<Model> model;
 
+#ifndef NO_CEREAL
   template <class Archive>
   void serialize( Archive & ar )
   {
     ar( name, transform, model );
   }
+#endif
 };
 
 class Scene {
@@ -69,11 +77,13 @@ class Scene {
   const Entity& getEntity(const U8 &index);
   const std::vector<Entity>& getEntities();
 
+#ifndef NO_CEREAL
   template <class Archive>
   void serialize( Archive & ar )
   {
     ar( name, m_Entities );
   }
+#endif
 
  private:
   std::vector<Entity> m_Entities;

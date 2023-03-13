@@ -8,8 +8,10 @@
 #include <memory>
 #include <vector>
 
+#ifndef NO_CEREAL
 #include <cereal/types/memory.hpp>
 #include <cereal/archives/binary.hpp>
+#endif
 
 namespace tbd {
 
@@ -28,11 +30,13 @@ template<typename T>
 struct Vector3 {
   T x, y, z;
 
+#ifndef NO_CEREAL
   template <class Archive>
   void serialize( Archive & ar )
   {
     ar( x, y, z );
   }
+#endif
 };
 
 };
