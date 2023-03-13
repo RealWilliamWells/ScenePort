@@ -16,7 +16,7 @@
 #include "stb_image.h"
 
 namespace tbd {
-    std::vector<U8> loadExampleTexture() {
+    Texture loadExampleTexture() {
       // Load texture file
       const std::string textureFile = "res/example/gfx/jesus.jpg";
       int width;
@@ -36,7 +36,10 @@ namespace tbd {
 
       stbi_image_free(textureDataPointer);
 
-      return textureData;
+      Texture texture({.width=static_cast<U32>(width), .height=static_cast<U32>(height),
+                       .nrChannels=static_cast<U32>(nrChannels), .data=textureData});
+
+      return texture;
     }
 
     TEST (ModelManagerTest, ImportModelFromGivenValues) {
@@ -48,7 +51,7 @@ namespace tbd {
     }
 
     TEST (SceneManagerTest, ExportAndLoadScene) {
-      std::vector<U8> texture = loadExampleTexture();
+      Texture texture = loadExampleTexture();
 
       ModelManager modelManager;
 

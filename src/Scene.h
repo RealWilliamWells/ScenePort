@@ -24,6 +24,23 @@ struct Transform {
 #endif
 };
 
+struct Texture {
+    U32 width;
+    U32 height;
+    U32 nrChannels;
+
+    // Texture data
+    std::vector<U8> data;
+
+#ifndef NO_CEREAL
+    template <class Archive>
+    void serialize( Archive & ar )
+    {
+      ar( width, height, nrChannels, data );
+    }
+#endif
+};
+
 struct Model {
   // USED TO CHECK IF THE ASSET IS ALREADY LOADED IN MEMORY.
   U64 md5;
@@ -39,8 +56,7 @@ struct Model {
   std::vector<Vector3<float>> textureCoords;
   std::vector<Vector3<float>> normals;
 
-  // Texture file
-  std::vector<U8> texture;
+  Texture texture;
 
 #ifndef NO_CEREAL
   template <class Archive>
@@ -102,7 +118,7 @@ class ModelManager {
                                     const std::vector<Vector3<U32>> &indices,
                                     const std::vector<Vector3<float>> &textureCoords,
                                     const std::vector<Vector3<float>> &normals,
-                                    const std::vector<U8> texture);
+                                    const Texture &texture);
   void FreeUnusedModels(Scene scene);
 
   [[nodiscard]] std::shared_ptr<Model> GetModel(U32 modelID) const;

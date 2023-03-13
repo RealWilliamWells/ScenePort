@@ -10,7 +10,7 @@ std::shared_ptr<Model> ModelManager::ImportModel(const std::vector<Vector3<float
                                                 const std::vector<Vector3<U32>> &indices,
                                                 const std::vector<Vector3<float>> &textureCoords,
                                                 const std::vector<Vector3<float>> &normals,
-                                                const std::vector<U8> texture) {
+                                                const Texture &texture) {
   Model model = {.vertices=vertices, .indices=indices, .textureCoords=textureCoords, .normals=normals, .texture=texture};
   m_Model.push_back(model);
   return std::make_shared<Model>(model);
