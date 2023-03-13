@@ -21,6 +21,7 @@ add_library(scene-data ${SRCS})
 
 # Testing framework
 set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
+set(STB_COMMIT 3ecc60f25ae1391cf6434578ece782afa1458b5)
 
 FetchContent_Declare(googletest
         GIT_REPOSITORY https://github.com/google/googletest.git
@@ -29,8 +30,13 @@ FetchContent_Declare(googletest
 set(GTEST_FORCE_SHARED_CRT ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+FetchContent_Declare(stb
+        GIT_REPOSITORY git@github.com:nothings/stb.git
+        GIT_TAG ${STB_COMMIT})
+FetchContent_MakeAvailable(stb)
+FetchContent_GetProperties(stb SOURCE_DIR STB_SOURCE_DIR)
 
-include_directories(tests/)
+include_directories(tests/ ${STB_SOURCE_DIR})
 
 enable_testing()
 
@@ -43,3 +49,5 @@ target_link_libraries(${PROJECT_NAME}_tests
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}_tests)
+
+file(COPY res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

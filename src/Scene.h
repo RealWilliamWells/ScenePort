@@ -35,10 +35,13 @@ struct Model {
   std::vector<Vector3<float>> textureCoords;
   std::vector<Vector3<float>> normals;
 
+  // Texture file
+  std::vector<U8> texture;
+
   template <class Archive>
   void serialize( Archive & ar )
   {
-    ar( md5, vao, vbo, ebo, vertices, indices, textureCoords, normals );
+    ar( md5, vao, vbo, ebo, vertices, indices, textureCoords, normals, texture );
   }
 };
 
@@ -87,7 +90,8 @@ class ModelManager {
   std::shared_ptr<Model> ImportModel(const std::vector<Vector3<float>> &vertices,
                                     const std::vector<Vector3<U32>> &indices,
                                     const std::vector<Vector3<float>> &textureCoords,
-                                    const std::vector<Vector3<float>> &normals);
+                                    const std::vector<Vector3<float>> &normals,
+                                    const std::vector<U8> texture);
   void FreeUnusedModels(Scene scene);
 
   [[nodiscard]] std::shared_ptr<Model> GetModel(U32 modelID) const;
@@ -105,6 +109,9 @@ public:
 
     std::stringstream exportScene(const Scene &scene);
     std::shared_ptr<Scene> importScene(std::istream &input);
+
+    void exportToFile(const std::string &sceneName, const std::stringstream &ss);
+    std::stringstream importFromFile(const std::string &fileName);
 
     [[nodiscard]] std::shared_ptr<Model> GetScene(U32 sceneID) const;
 

@@ -9,8 +9,9 @@ std::shared_ptr<Model> ModelManager::ImportModel(const std::string &path) {
 std::shared_ptr<Model> ModelManager::ImportModel(const std::vector<Vector3<float>> &vertices,
                                                 const std::vector<Vector3<U32>> &indices,
                                                 const std::vector<Vector3<float>> &textureCoords,
-                                                const std::vector<Vector3<float>> &normals) {
-  Model model = {.vertices=vertices, .indices=indices, .textureCoords=textureCoords, .normals=normals};
+                                                const std::vector<Vector3<float>> &normals,
+                                                const std::vector<U8> texture) {
+  Model model = {.vertices=vertices, .indices=indices, .textureCoords=textureCoords, .normals=normals, .texture=texture};
   m_Model.push_back(model);
   return std::make_shared<Model>(model);
 }
@@ -47,12 +48,27 @@ std::shared_ptr<Scene> SceneManager::importScene(std::istream &input) {
   return std::make_shared<Scene>(scene);
 }
 
+std::stringstream SceneManager::importFromFile(const std::string &fileName) {
+  std::ifstream is(fileName, std::ios::binary);
+  std::stringstream ss;
+  ss << is.rdbuf();
+  return ss;
+}
+
 std::stringstream SceneManager::exportScene(const Scene &scene) {
   std::stringstream ss;
   cereal::BinaryOutputArchive outArchive( ss );
   outArchive( scene );
 
   return ss;
+}
+
+void SceneManager::exportToFile(const std::string &sceneName, const std::stringstream &ss) {
+  std::ofstream os(sceneName + ".oscene", std::ios::binary);
+  if (os) {
+    os << ss.str() << std::endl;
+  }
+  os.close();
 }
 
 };
