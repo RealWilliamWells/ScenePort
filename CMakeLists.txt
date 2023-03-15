@@ -30,26 +30,24 @@ if(NOT SWITCH)
 
     set(GTEST_FORCE_SHARED_CRT ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
-endif()
 
-FetchContent_Declare(stb
-        GIT_REPOSITORY https://github.com/nothings/stb
-        GIT_TAG ${STB_COMMIT})
-FetchContent_MakeAvailable(stb)
-FetchContent_GetProperties(stb SOURCE_DIR STB_SOURCE_DIR)
+    FetchContent_Declare(stb
+            GIT_REPOSITORY https://github.com/nothings/stb
+            GIT_TAG ${STB_COMMIT})
+    FetchContent_MakeAvailable(stb)
+    FetchContent_GetProperties(stb SOURCE_DIR STB_SOURCE_DIR)
 
-include_directories(tests/ ${STB_SOURCE_DIR})
+    include_directories(tests/ ${STB_SOURCE_DIR})
 
-enable_testing()
+    enable_testing()
 
-file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
-add_executable(${PROJECT_NAME}_tests ${TEST_SRC_FILES})
+    file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
+    add_executable(${PROJECT_NAME}_tests ${TEST_SRC_FILES})
 
-target_link_libraries(${PROJECT_NAME}_tests
-     gtest_main
-     ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}_tests
+         gtest_main
+         ${PROJECT_NAME})
 
-if(SWITCH)
     include(GoogleTest)
     gtest_discover_tests(${PROJECT_NAME}_tests)
 endif()
