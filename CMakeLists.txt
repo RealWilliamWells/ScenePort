@@ -4,12 +4,12 @@ project(scene-data)
 file(GLOB_RECURSE SRCS "src/*.cpp")
 
 # Fetch dependencies
-set(CEREAL_COMMIT ebef1e929807629befafbb2918ea1a08c7194554) # Version 1.3.2
+set(CEREAL_COMMIT 664d5cc4c2f1527f7490dbeb9704c0cf78b6cf80) # Version 1.3.2
 
 include(FetchContent)
 
 FetchContent_Declare(cereal
-        GIT_REPOSITORY https://github.com/USCiLab/cereal.git
+        GIT_REPOSITORY https://github.com/RealWilliamWells/cereal-no-boost
         GIT_TAG ${CEREAL_COMMIT})
 FetchContent_MakeAvailable(cereal)
 FetchContent_GetProperties(cereal SOURCE_DIR CEREAL_SOURCE_DIR)
@@ -33,7 +33,7 @@ if(NOT SWITCH)
 endif()
 
 FetchContent_Declare(stb
-        GIT_REPOSITORY git@github.com:nothings/stb.git
+        GIT_REPOSITORY https://github.com/nothings/stb
         GIT_TAG ${STB_COMMIT})
 FetchContent_MakeAvailable(stb)
 FetchContent_GetProperties(stb SOURCE_DIR STB_SOURCE_DIR)
