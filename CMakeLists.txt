@@ -23,12 +23,14 @@ add_library(scene-data ${SRCS})
 set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
 set(STB_COMMIT 3ecc60f25ae1391cf6434578ece782afa1458b5)
 
-FetchContent_Declare(googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG ${GTEST_COMMIT})
+if(NOT SWITCH)
+    FetchContent_Declare(googletest
+            GIT_REPOSITORY https://github.com/google/googletest.git
+            GIT_TAG ${GTEST_COMMIT})
 
-set(GTEST_FORCE_SHARED_CRT ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
+    set(GTEST_FORCE_SHARED_CRT ON CACHE BOOL "" FORCE)
+    FetchContent_MakeAvailable(googletest)
+endif()
 
 FetchContent_Declare(stb
         GIT_REPOSITORY git@github.com:nothings/stb.git
@@ -47,7 +49,9 @@ target_link_libraries(${PROJECT_NAME}_tests
      gtest_main
      ${PROJECT_NAME})
 
-include(GoogleTest)
-gtest_discover_tests(${PROJECT_NAME}_tests)
+if(SWITCH)
+    include(GoogleTest)
+    gtest_discover_tests(${PROJECT_NAME}_tests)
+endif()
 
 file(COPY res DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
