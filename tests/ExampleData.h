@@ -5,7 +5,7 @@
 #ifndef SCENE_IMPORT_AND_EXPORT_EXAMPLEDATA_H
 #define SCENE_IMPORT_AND_EXPORT_EXAMPLEDATA_H
 
-#include "Base.h"
+#include "sp/Base.h"
 
 const std::vector<tbd::Vector3<float>> vertices = {
         {-0.5f, -0.5f, -0.5f},

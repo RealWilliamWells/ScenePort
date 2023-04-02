@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 
 #include "ExampleData.h"
-#include "Scene.h"
+#include "sp/Scene.h"
 
 #include <fstream>
 #include <cereal/types/vector.hpp>

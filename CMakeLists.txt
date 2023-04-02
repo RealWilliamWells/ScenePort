@@ -1,23 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(scene-data)
-
-file(GLOB_RECURSE SRCS "src/*.cpp")
+project(ScenePort)
 
 # Fetch dependencies
 set(CEREAL_COMMIT 664d5cc4c2f1527f7490dbeb9704c0cf78b6cf80) # Version 1.3.2
 
 include(FetchContent)
 
-FetchContent_Declare(cereal
-        GIT_REPOSITORY https://github.com/RealWilliamWells/cereal-no-boost
-        GIT_TAG ${CEREAL_COMMIT})
-FetchContent_MakeAvailable(cereal)
-FetchContent_GetProperties(cereal SOURCE_DIR CEREAL_SOURCE_DIR)
+add_subdirectory(extern/cereal-no-boost)
 
-include_directories(src/ ${CEREAL_SOURCE_DIR}/include)
+include_directories(src/ extern/cereal-no-boost/include)
+file(GLOB_RECURSE scene_port_src "src/*.cpp")
 
-add_library(scene-data ${SRCS})
-
+add_library(ScenePort ${scene_port_src})
+target_link_libraries(ScenePort cereal)
 
 # Testing framework
 set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
