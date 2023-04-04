@@ -18,7 +18,7 @@ target_link_libraries(ScenePort cereal)
 set(GTEST_COMMIT e2239ee6043f73722e7aa812a459f54a28552929) # Version 1.11.0
 set(STB_COMMIT 3ecc60f25ae1391cf6434578ece782afa1458b5)
 
-if(NOT SWITCH and NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
+if(NOT SWITCH AND NOT ${CMAKE_SYSTEM_NAME} MATCHES "Emscripten")
     FetchContent_Declare(googletest
             GIT_REPOSITORY https://github.com/google/googletest.git
             GIT_TAG ${GTEST_COMMIT})
