@@ -1,0 +1,3 @@
+[submodule "extern/cereal-no-boost"]
+	path = extern/cereal-no-boost
+	url = https://github.com/RealWilliamWells/cereal-no-boost
