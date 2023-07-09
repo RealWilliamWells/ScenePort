@@ -7,7 +7,7 @@
 
 #include "sp/Base.h"
 
-const std::vector<tbd::Vector3<float>> vertices = {
+const std::vector<sp::Vector3<float>> vertices = {
         {-0.5f, -0.5f, -0.5f},
         {0.5f, -0.5f, -0.5f},
         {0.5f,  0.5f, -0.5f,},
@@ -51,7 +51,7 @@ const std::vector<tbd::Vector3<float>> vertices = {
         {-0.5f,  0.5f, -0.5f,},
 };
 
-const std::vector<tbd::Vector3<float>> textureCoords = {
+const std::vector<sp::Vector3<float>> textureCoords = {
         {0.0f, 0.0f,},
         {1.0f, 0.0f,},
         {1.0f, 1.0f,},

@@ -15,7 +15,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-namespace tbd {
+namespace sp {
     Texture loadExampleTexture() {
       // Load texture file
       const std::string textureFile = "res/example/gfx/jesus.jpg";
@@ -47,7 +47,7 @@ namespace tbd {
 
       std::shared_ptr<Model> model = modelManager.ImportModel(vertices, {}, textureCoords, {}, {});
 
-      EXPECT_EQ(model->vertices.at(3).x, vertices.at(3).x);
+      EXPECT_EQ(model->meshes.at(0).vertices.at(3).x, vertices.at(3).x);
     }
 
     TEST (SceneManagerTest, ExportAndLoadScene) {
@@ -72,8 +72,8 @@ namespace tbd {
 
       std::shared_ptr<Scene> importedScene = sceneManager.importScene(ss);
 
-      EXPECT_EQ(scene.getEntity(0).model->vertices.at(3).x,
-                importedScene->getEntity(0).model->vertices.at(3).x);
+      EXPECT_EQ(scene.getEntity(0).model->meshes.at(0).vertices.at(3).x,
+                importedScene->getEntity(0).model->meshes.at(0).vertices.at(3).x);
     }
 
   TEST (SceneManagerTest, ImportSceneFromFile) {
@@ -86,7 +86,7 @@ namespace tbd {
 
     std::shared_ptr<Scene> importedScene = sceneManager.importScene(input);
 
-    EXPECT_EQ(0.5f, importedScene->getEntity(0).model->vertices.at(3).x);
+    EXPECT_EQ(0.5f, importedScene->getEntity(0).model->meshes.at(0).vertices.at(3).x);
   }
 
 };
